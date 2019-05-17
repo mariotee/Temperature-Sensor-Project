@@ -1,0 +1,14 @@
+{
+  "name": "lab1-node",
+  "version": "1.0.0",
+  "description": "a node project that feeds data to firebase",
+  "main": "feed.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mario Torres",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^5.4.2"
+  }
+}

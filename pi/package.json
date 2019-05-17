@@ -1,0 +1,18 @@
+{
+  "name": "lab1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "firmware.js",
+  "scripts": {
+    "start": "node .",
+    "test": "node testing.js"
+  },
+  "author": "Hugs Not Bugs",
+  "license": "ISC",
+  "dependencies": {
+    "ds18b20": "^0.1.0",
+    "firebase": "^5.4.2",
+    "onoff": "^3.2.1",
+    "s-binary": "0.0.13"
+  }
+}

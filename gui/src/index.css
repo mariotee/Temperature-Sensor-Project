@@ -1,0 +1,34 @@
+:root {
+  --purple: #c000fc;
+  --dark: #c000fc;
+  --lightblue: #30c0ff;
+  --background: #cccccc;
+}
+
+body {
+  background-color: var(--background);
+  margin: 0;
+  padding: 0;
+  font-family: Segoe UI, Helvetica, sans-serif;
+}
+
+.main {
+  padding: 0 16px;
+  text-align: center;
+}
+
+.header {
+  text-align: center;
+  background-color: var(--lightblue);
+  color: var(--purple);
+  padding: 16px;
+}
+
+.displayText {
+  display: flex;
+  justify-content: space-between;
+  margin: 32px auto;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--dark);
+}

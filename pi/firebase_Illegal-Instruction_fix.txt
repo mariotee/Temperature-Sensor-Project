@@ -1,0 +1,7 @@
+if, in node, the following line:
+  const firebase = require('firebase')
+returns "Illegal Instruction"
+then that is because the Raspberry Pi Zero W hardware (ARMv6L) is not supported by firebase (@ least not right away).
+
+To get it to work, the following command must be run from the command line inside the main directory on the RPi Zero W:
+  npm rebuild --rebuild-from-source grpc
