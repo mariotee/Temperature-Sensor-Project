@@ -1,0 +1,2 @@
+:root{--purple:#c000fc;--dark:#c000fc;--lightblue:#30c0ff;--background:#ccc}body{background-color:var(--background);margin:0;padding:0;font-family:Segoe UI,Helvetica,sans-serif}.main{padding:0 16px}.header,.main{text-align:center}.header{background-color:var(--lightblue);color:var(--purple);padding:16px}.displayText{display:-ms-flexbox;display:flex;-ms-flex-pack:justify;justify-content:space-between;margin:32px auto;font-size:24px;font-weight:700;color:var(--dark)}
+/*# sourceMappingURL=main.005da355.css.map*/
