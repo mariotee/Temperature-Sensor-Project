@@ -14,6 +14,7 @@ class HomePage extends React.Component
 {
   //setting the initial state
   state = {
+    data: {temperature: []},
     displayF: false,
     lowThresh: 10,
     highThresh: 40,
@@ -23,25 +24,43 @@ class HomePage extends React.Component
   //the firebase method that starts the listener for our database
   componentDidMount() {
     //starts the listener; 
-    //after every update to firebase, takes a snapshot then runs whatever we want on that snapshot
-    DatabaseRef.on('value', snapshot => {
-      //another React Lifecycle method
-      this.setState({
-        data: snapshot.val(),
+    if (!process.env.REACT_APP_DEMO) {
+      //after every update to firebase, takes a snapshot then runs whatever we want on that snapshot
+      DatabaseRef.on('value', snapshot => {
+        //another React Lifecycle method
+        this.setState({
+          data: snapshot.val(),
+        })
       })
-    })
+    } else {
+      setInterval(() => {        
+        this.setState((prev) => {
+          let currentData = prev.data.temperature
+          
+          if (currentData.push(this.demo_randomCelsius()) > 301) {
+            currentData.shift()
+          }
+        
+          return {
+            data: {
+              temperature: [...currentData]
+            }
+          }
+        })
+      }, 200)
+    }
   }
 
   componentDidUpdate() {
-    if( this.state.data.temperature ) {
+    if (this.state.data.temperature) {
       const tempData = this.state.data.temperature;
       const currentTemp = tempData[tempData.length -1];
 
-      if( currentTemp < this.state.lowThresh ) {
+      if (!process.env.REACT_APP_DEMO && currentTemp < this.state.lowThresh) {
         this.sendSms(1)
       }
 
-      if( currentTemp > this.state.highThresh ) {
+      if (!process.env.REACT_APP_DEMO && currentTemp > this.state.highThresh) {
         this.sendSms(0)
       }      
     }
@@ -49,10 +68,12 @@ class HomePage extends React.Component
   //this toggles the LED; labelled as async because the firebase db.set() method
   //is asynchronous. so we will wait for it to complete before moving on.
   toggleLed = async () => {
-    await DatabaseRef.set({
-      ...this.state.data,
-      ledActive: !this.state.data.ledActive,
-    })
+    if (!process.env.REACT_APP_DEMO) {
+      await DatabaseRef.set({
+        ...this.state.data,
+        ledActive: !this.state.data.ledActive,
+      })
+    }    
   }
 
   //this calls the Twilio backend running on AWS Cloud.
@@ -66,14 +87,20 @@ class HomePage extends React.Component
       phoneNumber: this.state.phone,
     }
 
-    await axios.post('LAMBDA_URL',body);
+    if (!process.env.REACT_APP_DEMO) await axios.post('LAMBDA_URL',body);
   }
 
   clearGraph = async () => {
-    await DatabaseRef.set({
-      ...this.state.data,
-      temperature: [],
-    })
+    if (!process.env.REACT_APP_DEMO) {
+      await DatabaseRef.set({
+        ...this.state.data,
+        temperature: [],
+      })
+    } else {
+      this.setState({
+        data: {temperature: []}
+      })
+    }
   }
 
   toggleFahrenheit = () => {
@@ -98,6 +125,14 @@ class HomePage extends React.Component
       }
     }
   }
+
+  demo_randomCelsius = () => {
+    const max = 48
+    const min = 12
+
+    return Math.ceil(Math.random() * (max - min) + min)
+  }
+
   //React Lifecycle method: this is the last thing to run. it renders our class/component
   //and handles any logic however we want
   render() {

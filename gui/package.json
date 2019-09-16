@@ -1,6 +1,7 @@
 {
   "name": "ece4880-lab01-gui",
   "version": "0.1.0",
+  "homepage": "https://mariotee.github.io/Temperature-Sensor-Project",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.0.1",

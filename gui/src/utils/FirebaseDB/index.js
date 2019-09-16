@@ -9,7 +9,11 @@ const config = {
   messagingSenderId: "SENDER"
 };
 
-firebase.initializeApp(config);
-const ref = firebase.database().ref('/');
+let ref
+
+if (!process.env.REACT_APP_DEMO) {
+  firebase.initializeApp(config);
+  ref = firebase.database().ref('/');
+}
 
 export default ref;
